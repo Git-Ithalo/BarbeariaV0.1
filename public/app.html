@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia Nobre — Minha Área</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="navrow">
+    <a href="index.html" class="brand">Barbearia Nobre<span>ESTÚDIO DE BARBEARIA</span></a>
+    <nav class="links">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="equipe.html">Equipe</a>
+      <span id="authNav" style="display:flex;gap:14px;align-items:center"></span>
+    </nav>
+  </div>
+</header>
+
+<div class="appwrap">
+  <div id="profileHeader"></div>
+  <div class="tabs">
+    <button id="tab-agendar" class="active" onclick="setTab('agendar')">Agendar</button>
+    <button id="tab-meus" onclick="setTab('meus')">Meus Agendamentos</button>
+    <button id="tab-perfil" onclick="setTab('perfil')">Perfil</button>
+  </div>
+  <div id="content"><p class="skeleton">Carregando...</p></div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/content.js"></script>
+<script src="js/client.js"></script>
+</body>
+</html>

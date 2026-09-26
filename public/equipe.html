@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia Nobre — Equipe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="navrow">
+    <a href="index.html" class="brand">Barbearia Nobre<span>ESTÚDIO DE BARBEARIA</span></a>
+    <nav class="links">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="equipe.html" class="active">Equipe</a>
+      <span id="authNav" style="display:flex;gap:14px;align-items:center"></span>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap">
+  <h2 class="sectitle">Nossa Equipe</h2>
+  <p class="subtitle">Profissionais experientes prontos para atender você. Escolha o seu barbeiro de confiança na hora de agendar.</p>
+  <div id="list" class="grid g3"><p class="skeleton">Carregando equipe...</p></div>
+</section>
+
+<footer>Barbearia Nobre · Rua das Tesouras, 123 · Seg–Sáb 09h–19h · (11) 99999-0000</footer>
+
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/content.js"></script>
+<script>
+(async () => {
+  const box = document.getElementById('list');
+  const user = await Api.me();
+  try {
+    const { barbers } = await Api.get('/api/barbers');
+    box.innerHTML = barbers.length ? barbers.map(b => {
+      const info = barberInfo(b.name);
+      const bookHref = user && user.role !== 'admin' ? `app.html?barber=${b.id}` : (user && user.role === 'admin' ? '#' : `cadastro.html?redirect=barber&barber=${b.id}`);
+      return `<div class="barbercard">
+        <img src="${info.photo}" alt="${esc(b.name)}" loading="lazy">
+        <div class="body">
+          <h3>${esc(b.name)}</h3>
+          <div class="tagrow"><span class="tag">${info.specialty}</span><span class="tag">${info.years} anos de experiência</span></div>
+          <p class="muted" style="margin:0">${esc(b.bio || '')}</p>
+          ${info.instagram ? `<p class="muted" style="margin:8px 0 0;font-size:12.5px">${info.instagram}</p>` : ''}
+          ${user && user.role === 'admin' ? '' : `<a href="${bookHref}" class="btn small solid" style="margin-top:12px">Agendar com ${esc(b.name.split(' ')[0])}</a>`}
+        </div>
+      </div>`;
+    }).join('') : '<p class="muted">Nenhum barbeiro cadastrado no momento.</p>';
+  } catch (e) {
+    box.innerHTML = '<p class="err">Não foi possível carregar a equipe. Verifique se o servidor está rodando.</p>';
+  }
+})();
+</script>
+</body>
+</html>

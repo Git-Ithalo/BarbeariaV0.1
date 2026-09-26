@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia Nobre — Entrar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="navrow">
+    <a href="index.html" class="brand">Barbearia Nobre<span>ESTÚDIO DE BARBEARIA</span></a>
+    <nav class="links">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="equipe.html">Equipe</a>
+      <span id="authNav" style="display:flex;gap:14px;align-items:center"></span>
+    </nav>
+  </div>
+</header>
+
+<div class="authbox">
+  <h2>Entrar na sua conta</h2>
+  <div class="field"><label>E-mail</label><input id="f_email" type="email" placeholder="voce@email.com"></div>
+  <div class="field"><label>Senha</label><input id="f_pass" type="password" placeholder="••••••••"></div>
+  <button class="btn solid" style="width:100%" onclick="submitLogin()">Entrar</button>
+  <p class="muted" style="font-size:12px;margin-top:12px">Admin demo: admin@barbearia.com / admin123</p>
+  <div class="switchline">Não tem conta? <a href="#" onclick="location.href='cadastro.html'+location.search;return false;">Cadastre-se</a></div>
+  <div id="msg"></div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script>
+async function submitLogin() {
+  const email = document.getElementById('f_email').value;
+  const pass = document.getElementById('f_pass').value;
+  const msg = document.getElementById('msg');
+  msg.innerHTML = '';
+  try {
+    const { token, user } = await Api.post('/api/auth/login', { email, password: pass });
+    Api.setToken(token);
+    location.href = user.role === 'admin' ? 'admin.html' : ('app.html' + location.search);
+  } catch (e) {
+    msg.innerHTML = `<p class="err">${esc(e.message)}</p>`;
+  }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Enter') submitLogin(); });
+(async()=>{ const u = await Api.me(); if (u) location.href = u.role==='admin' ? 'admin.html' : ('app.html' + location.search); })();
+</script>
+</body>
+</html>

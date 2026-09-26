@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia Nobre — Criar conta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="navrow">
+    <a href="index.html" class="brand">Barbearia Nobre<span>ESTÚDIO DE BARBEARIA</span></a>
+    <nav class="links">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="equipe.html">Equipe</a>
+      <span id="authNav" style="display:flex;gap:14px;align-items:center"></span>
+    </nav>
+  </div>
+</header>
+
+<div class="authbox">
+  <h2>Criar conta</h2>
+  <div class="field"><label>Nome completo</label><input id="f_name" placeholder="Seu nome"></div>
+  <div class="field"><label>E-mail</label><input id="f_email" type="email" placeholder="voce@email.com"></div>
+  <div class="field"><label>Telefone (DDD+número)</label><input id="f_phone" placeholder="11999998888"></div>
+  <div class="field"><label>Senha</label><input id="f_pass" type="password" placeholder="mínimo 6 caracteres"></div>
+  <div class="field"><label>Confirmar senha</label><input id="f_pass2" type="password"></div>
+  <button class="btn solid" style="width:100%" onclick="submitRegister()">Criar conta</button>
+  <div class="switchline">Já tem conta? <a href="#" onclick="location.href='login.html'+location.search;return false;">Entrar</a></div>
+  <div id="msg"></div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script>
+async function submitRegister() {
+  const name = document.getElementById('f_name').value;
+  const email = document.getElementById('f_email').value;
+  const phone = document.getElementById('f_phone').value;
+  const pass = document.getElementById('f_pass').value;
+  const pass2 = document.getElementById('f_pass2').value;
+  const msg = document.getElementById('msg');
+  msg.innerHTML = '';
+  if (pass !== pass2) { msg.innerHTML = '<p class="err">As senhas não coincidem.</p>'; return; }
+  try {
+    const { token, user } = await Api.post('/api/auth/register', { name, email, phone, password: pass });
+    Api.setToken(token);
+    location.href = 'app.html' + location.search;
+  } catch (e) {
+    msg.innerHTML = `<p class="err">${esc(e.message)}</p>`;
+  }
+}
+(async()=>{ const u = await Api.me(); if (u) location.href = u.role==='admin' ? 'admin.html' : ('app.html' + location.search); })();
+</script>
+</body>
+</html>

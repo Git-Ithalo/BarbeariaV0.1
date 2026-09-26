@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia Nobre — Serviços</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="navrow">
+    <a href="index.html" class="brand">Barbearia Nobre<span>ESTÚDIO DE BARBEARIA</span></a>
+    <nav class="links">
+      <a href="index.html">Início</a>
+      <a href="servicos.html" class="active">Serviços</a>
+      <a href="equipe.html">Equipe</a>
+      <span id="authNav" style="display:flex;gap:14px;align-items:center"></span>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap">
+  <h2 class="sectitle">Nossos Serviços</h2>
+  <p class="subtitle">Preços, duração e o que está incluso em cada atendimento — atualizados em tempo real pelo painel administrativo.</p>
+  <div id="list" class="grid g3"><p class="skeleton">Carregando serviços...</p></div>
+</section>
+
+<footer>Barbearia Nobre · Rua das Tesouras, 123 · Seg–Sáb 09h–19h · (11) 99999-0000</footer>
+
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/content.js"></script>
+<script>
+(async () => {
+  const box = document.getElementById('list');
+  const user = await Api.me();
+  try {
+    const { services } = await Api.get('/api/services');
+    box.innerHTML = services.length ? services.map(s => {
+      const info = serviceInfo(s.name);
+      const bookHref = user && user.role !== 'admin' ? `app.html?service=${s.id}` : (user && user.role === 'admin' ? '#' : `cadastro.html?redirect=service&service=${s.id}`);
+      return `<div class="imgcard">
+        <img src="${info.image}" alt="${esc(s.name)}" loading="lazy">
+        <div class="body">
+          <h3>${esc(s.name)}</h3>
+          <span class="muted">${s.duration} minutos</span>
+          <div class="price">${money(s.price)}</div>
+          <p>${esc(info.desc)}</p>
+          ${user && user.role === 'admin' ? '' : `<a href="${bookHref}" class="btn small solid" style="margin-top:10px">Agendar este serviço</a>`}
+        </div>
+      </div>`;
+    }).join('') : '<p class="muted">Nenhum serviço cadastrado no momento.</p>';
+  } catch (e) {
+    box.innerHTML = '<p class="err">Não foi possível carregar os serviços. Verifique se o servidor está rodando.</p>';
+  }
+})();
+</script>
+</body>
+</html>

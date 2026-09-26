@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia Nobre — Início</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="navrow">
+    <a href="index.html" class="brand">Barbearia Nobre<span>ESTÚDIO DE BARBEARIA</span></a>
+    <nav class="links">
+      <a href="index.html" class="active">Início</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="equipe.html">Equipe</a>
+      <span id="authNav" style="display:flex;gap:14px;align-items:center"></span>
+    </nav>
+  </div>
+</header>
+
+<div class="hero withimg" style="background-image:url('https://images.pexels.com/photos/7518728/pexels-photo-7518728.jpeg?auto=compress&cs=tinysrgb&w=1600')">
+  <div class="wrap">
+    <h1>Tradição, precisão e estilo em cada corte.</h1>
+    <p>Agende seu horário em minutos e garanta atendimento com os melhores barbeiros da cidade — sem filas, sem ligações.</p>
+    <a href="cadastro.html" class="btn solid" id="ctaBtn">Agendar horário</a>
+  </div>
+</div>
+
+<section class="wrap">
+  <h2 class="sectitle">Por que a Barbearia Nobre</h2>
+  <p class="subtitle">Um estúdio pensado para quem valoriza atenção aos detalhes.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Agenda sem espera</h3><p class="muted" style="margin:0">Escolha o horário exato que funciona pra você, direto pelo sistema, e acompanhe a confirmação em tempo real.</p></div>
+    <div class="card"><h3>Barbeiros experientes</h3><p class="muted" style="margin:0">Equipe especializada em cortes clássicos e modernos, com anos de estrada em cada navalha.</p></div>
+    <div class="card"><h3>Ambiente premium</h3><p class="muted" style="margin:0">Cadeiras de couro, produtos importados e atendimento de excelência do início ao fim.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sectitle">O estúdio</h2>
+  <p class="subtitle">Um espaço construído para o seu momento de cuidado.</p>
+  <div class="gallerygrid">
+    <img src="https://images.pexels.com/photos/2318055/pexels-photo-2318055.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Ambiente interno da barbearia" loading="lazy">
+    <img src="https://images.pexels.com/photos/13809242/pexels-photo-13809242.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Mesa de ferramentas do barbeiro" loading="lazy">
+    <img src="https://images.pexels.com/photos/1836983/pexels-photo-1836983.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Barbeiro cortando o cabelo de um cliente" loading="lazy">
+    <img src="https://images.pexels.com/photos/11793730/pexels-photo-11793730.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Máquinas de corte profissionais" loading="lazy">
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sectitle">O que dizem nossos clientes</h2>
+  <p class="subtitle">Depoimentos ilustrativos — os primeiros a avaliar podem ser vocês.</p>
+  <div class="testigrid">
+    <div class="testi"><p>"Virei cliente fixo depois do primeiro corte. O agendamento pelo site é rapidíssimo, nunca mais liguei pra marcar horário."</p><b>— Cliente Barbearia Nobre</b></div>
+    <div class="testi"><p>"Ambiente impecável e atenção aos detalhes que eu nunca tinha visto em outra barbearia da região."</p><b>— Cliente Barbearia Nobre</b></div>
+    <div class="testi"><p>"O combo de corte e barba vale muito a pena. Saio de lá sempre com a autoestima lá em cima."</p><b>— Cliente Barbearia Nobre</b></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sectitle">Horário e localização</h2>
+  <div class="hourscard">
+    <table>
+      <tr><td>Segunda a Sexta</td><td>09h — 19h</td></tr>
+      <tr><td>Sábado</td><td>09h — 19h</td></tr>
+      <tr><td>Domingo</td><td>Fechado</td></tr>
+    </table>
+    <table>
+      <tr><td>Endereço</td><td>Rua das Tesouras, 123 — Centro</td></tr>
+      <tr><td>Telefone</td><td>(11) 99999-0000</td></tr>
+      <tr><td>E-mail</td><td>contato@barbearianobre.com.br</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>Barbearia Nobre · Rua das Tesouras, 123 · Seg–Sáb 09h–19h · (11) 99999-0000</footer>
+
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(async()=>{ const u=await Api.me(); const cta=document.getElementById('ctaBtn'); if(u) cta.href = u.role==='admin' ? 'admin.html' : 'app.html'; })();
+</script>
+</body>
+</html>
